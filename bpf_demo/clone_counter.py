@@ -20,7 +20,7 @@ int hello_world(void *ctx) {
 }
 """
 
-b = BPF(text=prog)
+b = BPF(text=prog, debug=4)
 
 # attaching hello_world function to sys_clone system call.
 b.attach_kprobe(event="sys_clone", fn_name="hello_world")
