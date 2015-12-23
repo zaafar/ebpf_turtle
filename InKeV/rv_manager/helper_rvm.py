@@ -29,7 +29,7 @@ class rv_manager(object):
         self.ipr.tc("add-filter", "bpf", ifc_index, ":1", fd=func.fd,
                     name=func.name, parent="ffff:", action="drop", classid=1)
 
-    def add_new_vm(self, phy_iface_index, virt_iface_index):
+    def add_new_workload(self, phy_iface_index, virt_iface_index):
         self.ifc2vi[self.ifc2vi.Key(phy_iface_index)] = self.ifc2vi.Leaf(
             virt_iface_index)
         self.vi2ifc[self.vi2ifc.Key(virt_iface_index)] = self.vi2ifc.Leaf(

@@ -36,7 +36,7 @@ class pipeline_manager(object):
         pass
 
     def load_workload(self, workload_phy_port, attached_with_vnf_fd, attached_with_vport):
-        unique_virtual_iface = generate_unique_viface()
+        unique_virtual_iface = self.generate_unique_viface()
         self.vnf_list[self.RVM][0].add_new_workload(
             workload_phy_port, unique_virtual_iface)
         self.patch_panel.link_interfaces(
@@ -48,4 +48,4 @@ class pipeline_manager(object):
         pass
 
 # Unit Test
-# pm = pipeline_manager()
+pm = pipeline_manager()
