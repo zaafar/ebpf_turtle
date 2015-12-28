@@ -5,15 +5,22 @@
 struct mac_key {
   u64 mac;
 };
+
 struct host_info {
   u32 ifindex;
   u64 rx_pkts;
   u64 tx_pkts;
 };
-BPF_TABLE("hash", struct mac_key, struct host_info, mac2host, 10240); struct config {
+
+BPF_TABLE("hash", struct mac_key, struct host_info, mac2host, 10240);
+
+struct config {
   int ifindex;
 };
-BPF_TABLE("hash", int, struct config, conf, TOTAL_PORTS); // Handle packets from (namespace outside) interface and forward it to bridge 
+
+BPF_TABLE("hash", int, struct config, conf, TOTAL_PORTS);
+
+// Handle packets from (namespace outside) interface and forward it to bridge 
 int handle_ingress(struct __sk_buff *skb) {
   //Lets assume that the packet is at 0th location of the memory.
   u8 *cursor = 0;
@@ -36,7 +43,8 @@ int handle_ingress(struct __sk_buff *skb) {
   //bpf_trace_printk("[egress] sending traffic to ifindex=%d\n, pkt_type=%d", cfg->ifindex, ethernet->type);
   return 0;
 }
-// Handle packets inside the bridge and forward it to respective interface 
+
+// Handle packets inside the bridge and forward it to respective interface
 int handle_egress(struct __sk_buff *skb) {
   u8 *cursor = 0;
   struct ethernet_t *ethernet = cursor_advance(cursor, sizeof(*ethernet));
