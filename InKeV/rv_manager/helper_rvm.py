@@ -1,6 +1,5 @@
 from bcc import BPF
 from pyroute2 import IPRoute
-from ctypes import c_int, c_uint
 
 
 class rv_manager(object):
@@ -24,7 +23,7 @@ class rv_manager(object):
     def get_fd(self):
         return self.func_virt2phy.fd
 
-    def set_bpf_egress(self, ifc_index, func):
+    def set_bpf_ingress(self, ifc_index, func):
         self.ipr.tc("add", "ingress", ifc_index, "ffff:")
         self.ipr.tc("add-filter", "bpf", ifc_index, ":1", fd=func.fd,
                     name=func.name, parent="ffff:", action="drop", classid=1)
@@ -35,7 +34,7 @@ class rv_manager(object):
         self.vi2ifc[self.vi2ifc.Key(virt_iface_index)] = self.vi2ifc.Leaf(
             phy_iface_index)
 
-        self.set_bpf_egress(phy_iface_index, self.func_phy2virt)
+        self.set_bpf_ingress(phy_iface_index, self.func_phy2virt)
 
 
 # UNIT TESTING

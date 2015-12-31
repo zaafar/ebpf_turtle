@@ -23,13 +23,13 @@ class patch_panel(object):
         self.vnf_counter = self.vnf_counter + 1
         return self.vnf_counter - 1
 
-    def link_interfaces(self, vnf_from_iface, vnf_to_iface, vnf_to_fd):
+    def link_interfaces(self, vnf_from_iface, is_virtual, vnf_to_iface, vnf_to_fd):
         self.forwarder[self.forwarder.Key(
             vnf_from_iface)] = self.forwarder.Leaf(
-            vnf_to_iface, vnf_to_fd)
+            is_virtual, vnf_to_iface, vnf_to_fd)
 
 
 # Unit Testing
 # pp = patch_panel()
 # print pp.add_new_vnf(pp.get_fd())
-# pp.link_interfaces(100, 200, 0)
+# pp.link_interfaces(100, 1, 200, 0)
