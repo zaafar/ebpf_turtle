@@ -5,7 +5,7 @@ class patch_panel(object):
 
     def __init__(self):
         self.vnf_counter = 0
-        self.dataplane = BPF(src_file="patch_panel/patch_panel.c")
+        self.dataplane = BPF(src_file="core/patch_panel/patch_panel.c")
         # Loading Tables from db
         self.vnf_map = self.dataplane.get_table("vnf_prog")
         self.forwarder = self.dataplane.get_table("forwarder_vi")

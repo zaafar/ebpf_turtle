@@ -6,7 +6,7 @@ class rv_manager(object):
 
     def __init__(self):
         self.ipr = IPRoute()
-        self.dataplane = BPF(src_file="rv_manager/rv_manager.c")
+        self.dataplane = BPF(src_file="core/rv_manager/rv_manager.c")
         # Loading Tables from dp
         self.next = self.dataplane.get_table("next_hop")
         self.ifc2vi = self.dataplane.get_table("rvm_ifc2vi")

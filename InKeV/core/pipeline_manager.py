@@ -17,7 +17,7 @@ class pipeline_manager(object):
         # Loading patch panel and rv_manager vnf.
         # They are must have vnf for every topology.
         self.patch_panel = patch_panel()
-        self.load_vnf("rv_manager.helper_rvm", "rv_manager", self.RVM)
+        self.load_vnf("core.rv_manager.helper_rvm", "rv_manager", self.RVM)
 
     def generate_unique_viface(self):
         self.unique_viface_counter = self.unique_viface_counter + 1
@@ -27,6 +27,8 @@ class pipeline_manager(object):
         mod = __import__(path)
         components = (path + "." + vnf_class_name).split('.')
         for comp in components[1:]:
+            if not comp:
+                comp = ".."
             mod = getattr(mod, comp)
         inst = mod()
         inst.set_next_hop(self.patch_panel.get_fd())
